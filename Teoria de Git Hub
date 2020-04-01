@@ -1,0 +1,106 @@
+1. Se debe crear un archivo plano de nombre README.md ya que este sera el primer documento en ser leido al momento de ir a GITHUB.
+2. Se inicia git dento del fichero (git init), lo que creara el fichero oculto .git y nos pondra en la rama master.
+    commit es la forma de guardar cambios que ocurren dentro del proyecto puntual.
+    (todo cambio tiene cuatro estados 1. sin seguimiento 2. sin cambios 3. con cambios 4. en staging)
+3. Se debe configurar correo y nombre dentro del sistema (git config --global user.email "email" / git config --global user.name "nombre")
+4. Estos son unos comandos importantes para el manejo de GIT y GITHUB
+    // De inicio y configuracion
+    --------------------------------------------------------------------------------------------------------------------------------
+    git init - Es para iniciar el programa
+    git config --global user.name "Juan Ospina" - comando para configurar el nombre de la persona que esta haciendo la actualización
+    git config --global user.email "silohe6@gmail.com" - comando para configurar el correo electronico de la persona que esta haciendo la actualización
+    git config - list - comando para revisar la configuración actual de github
+
+    // De carga y actualizacion LOCAL
+    --------------------------------------------------------------------------------------------------------------------------------
+    git add - Comnado para adicionar un documento a la rama
+    git add . - comando ara adicionar todos los documentos que se hubieran creado/actualizado dentro de un mismo directorio o rama
+    git commit it -m - Esto carga definitivamente el documento a la rama correspondiente en el servidor... y crea una nueva versión
+    git commit -am : crean un commit de los cambios realizados en los archivos que previamente ya hubieran sido subidos con ADD por lo menos una ves, quitando de por medio tener que estar haciendo muchos ADDS
+    
+    // De navegacion y revision
+    --------------------------------------------------------------------------------------------------------------------------------
+    git status - permite ver el estado actual de un fichero (a que rama pertenece, que archivos estan pendientes por adicionar, que archivos estan pendientes por commit y que archivos tienen modificaciones)
+    git log <file> - comando para mostrar los commits que ha tenido el achivo y cada uno de los mensajes que se envian con estos
+    git log --stat - comando para ver cada uno de los commits que se han hecho, con la claridad de cuantos bits y que archivos y directorios se han cargado al repositorio.
+    git log --all --graph --decorate --oneline : este comando permite graficar en la consola todo el historial del proyecto con cada uno de los commits y las ramas que este tenga
+    git log -S "Palabra" : este comando permite buscar una palabra dentro de cada commit hecho... tambien traera el commit si el nombre de la rama coincide con la palabra.
+    git show (nombre del archivo) - muestra la el ultimo commit que se hubiera realizado y el estado anterior y los ajustes nuevos que tenga dicho documento
+    git diff <numero de commit que quiero comparar> <numero de commit contra el que comparar>
+    git grep -n <Palabra> : Arroja el lugar y linea donde aparece una palabra en todos los archivos de la rama
+    git grep -c <Palabra> : Arroja la cantidad de veces que aparece una palabra en todos los archivos de la rama
+    git grep -c "<p>" : Se puede buscar tambien por etiquetas... pero se debe utilizar las comillas dobles-
+    
+    // Para modificar cambios(commits)
+    -------------------------------------------------------------------------------------------------------------------------------
+    git restore <file> - sirve para retornar un documento a la version anterior del mismo. // git restore --staged <file> - comando para retornar un archivo despues de haberle dado ADD, esto con el fin de que no suba como un commit
+    [ADVERTENCIA - ESTO RETORNA Y BORRA ABSOLUTAMENTE TODA LA EVIDENCIA ANTERIOR] git reset <numero del commit al que quiero regresar> (--hard, retorna absolutamente todo a esa version y elimina cualquier rastro// --soft, retorna a la version solicitada sin embargo lo que se tenga en el limbo de ADD no se elimnina)
+    git rm - Este comando nos ayuda a eliminar archivos de Git sin eliminar su historial del sistema de versiones. Esto quiere decir que si necesitamos recuperar el archivo solo debemos “viajar en el tiempo” y recuperar el último commit antes de borrar el archivo en cuestión. (git rm --cached: Elimina los archivos del área de Staging y del próximo commit pero los mantiene en nuestro disco duro.//git rm --force: Elimina los archivos de Git y del disco duro. Git siempre guarda todo, por lo que podemos acceder al registro de la existencia de los archivos, de modo que podremos recuperarlos si es necesario (pero debemos usar comandos más avanzados)
+    git reset HEAD: Este es el comando para sacar archivos del área de Staging. No para borrarlos ni nada de eso, solo para que los últimos cambios de estos archivos no se envíen al último commit, a menos que cambiemos de opinión y los incluyamos de nuevo en staging con git add, por supuesto.
+    git checkout -- NOMBRE_DEL_ARCHIVO : (Es importante diferenciar el uso de este comando, ya que tambien se utiliza para moverse entre ramas, sin embargo, al colocar los guiones es posible volver a la version justamente anterior de un archivo, ya que elimina cualquier cambio realizado)
+
+    // Para el Manejo de Ramas (Branch)
+    -------------------------------------------------------------------------------------------------------------------------------
+    git branch <nombre rama> : crea una nueva rama o linea de trabajo paralela
+    git checkout <nombre rama> : comando para moverse entre ramas
+    git checkout -b <nombre rama> : comando para crear una nueva rama y este al mismo tiempo me permite moverme a dicha rama
+    git merge <nombre ramainvocada>: este comando se utiliza para fusionar dos ramas, sin embargo es importante aclarar que desde la rama desde la cual se invoca es la que queda como rama principal y trae y fusiona todos los cambios nuevos ocurridos en el utlimo commit de la rama que se invoca.
+    git rebase <nombre de la rama> : comando para traer los commits que se realizaron en la rama que se nombra a la rama en la que me encuentro ubicado; en este caso la rama anterior no se elimina.
+
+    // Para el cargue de arhivos y proyectos al servidor REMOTO
+    -------------------------------------------------------------------------------------------------------------------------------
+    git pull (origin/nube)<nombre del servidor remoto> (master)<nombre de la rama en la que se esta>; esto se hace primero:  trae y clona el repositorio remoto a mi repositorio local
+    git push (origin/nube)<nombre del servidor remoto> (master)<nombre de la rama en la que se esta>; esto despues:  sube mi repositorio local al repositorio remoto            
+
+    // Manejo de Ramas remotas
+    git branch -r : se muestran todas las ramas remotas
+    git branch -a : se muestran todas las ramas tanto locales como remotas
+    
+    git shortlog -sn : muestra cuantos commit han hecho cada miembros del equipo.
+    git shortlog -sn --all : muestra cuantos commit han hecho cada miembros del equipo hasta los que han sido eliminado
+    git shortlog -sn --all --no-merge : muestra cuantos commit han hecho cada miembros quitando los eliminados sin los merges
+
+    git blame ARCHIVO : muestra quien hizo cada cosa linea por linea
+    git blame ARCHIVO -Llinea_inicial,linea_final : muestra quien hizo cada cosa linea por linea indicándole desde que linea ver ejemplo -L35,50
+
+    **ES RECOMENDABLE HACER UNA RAMA PARA CADA UNO DE LOS GRUPOS DE TRABAJO INDEPENDIENTE
+
+    git reset --soft <#ID commit al que quiero regresar> : esto permite regresar al estado del commit que colocamos, sin embargo, es necesario crear un nuevo commit despues de esto para poder guardar los cambios realizados, asi mismo, se puede ADD de forma independiente solo los archivos que deseo guardar, pudiendo dejar sin efecto los demas archivos
+    git reset --hard <#ID commit al que quiero regresar> : esto de forma irreversible, nos retorna al estado del commit del que pusimos el ID
+    git reflog
+    
+    git COMANDO --help = muestra como funciona el comando.
+
+5. PASOS PARA CONFIGURACION DE LLAVES SSH
+
+    utilizan criptografia asimetrica (hace uso de llaves publicas y privadas)
+    permiten crear conexion facil y segura con el servidor
+
+    para crear dichas llaves es necesario hacer uso del comando> ssh-keygen -t rsa -b 4096 -C "Comentario Personal" (este comando funciona tanto en linux, como en windows)
+    una vez se ejecuta el comando, se solicitara determinar donde quedaran almacenadas las llaves, sin embargo, por defecto el sistema coloca una ruta; la cual podemos respetar o crear nuestro propio fichero
+    al dar enter, se solitara un passphrase, que hace las veces de una constrasenia, es recomendable utilizar una que recordemos y luego se solicita repetir dicha contrasenia.
+    al dar enter, se crearan las dos llaves y se almacenaran en el fichero determinado.
+
+    luego es necesario enlazar dichas llaves SSH con el servidor de GIT HUB, para esto:
+        1. ir al perfil de la esquina superior derecha, y entrar a los settings
+        2. entrar al modulo que se denomina SSH y GPG KEYS
+        3. Verificar si ya existe conexion segura con el equipo desde el que estamos trabajando, de no ser asi, se debe crear una nueva llave.
+        4. ahi se colocara un nombre a dicha conexion y en la llave, se debera pegar el contenido del archivo ID_RSA.PUB, el cual contiene la llave publica que se genera al momento de crear las llaves SSH.
+/** las de Windows estan en /Users/juand/.ssh
+/** las de Ubuntu estan en /home/juandhack/.ssh
+
+Comando para verificar las llaves SSH: # ssh -T git@github.com
+
+6. Crear un repositorio
+
+    - En la esquina superior derecha se encuentra el perfil y luego se encuentra un sibolo de + dentro del cual se encuentra la opcion de crear un nuevo repositorio.
+    - Al entrar en la creacion de dicho repositorio se podra determinar quien es el propietario y cual es el nombre del repositorio.
+    - luego se podra dar una descripcion de forma opcional.
+    - se puede configurar si el repositorio sera Publico o Privado, esto como un nivel de seguridad.
+    - Es recomendable seleccionar que el repositorio inice con un archivo README.md, con el objetivo de incluir dentro de este archivo una descripcion mas detallada del objetivo, contenido y estrutura del repositorio.
+    - (el profesor recomienda licenciar el repositorio con la clasificacion de MIT license)
+
+    - una vez creado el repositorio, nos podemos dirigir al boton denominado (Clone or download)/ dentro del cual podemos trabajar por HTTPS o por SSH, donde es recomendable utilizar SSH.
+    
+
+    
